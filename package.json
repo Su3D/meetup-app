@@ -4,6 +4,8 @@
   "private": true,
   "homepage": "http://su3d.github.io/meetup-app",
   "dependencies": {
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-scripts": "3.2.0"
