@@ -8,23 +8,28 @@ describe('<NumberOfEvents /> component', () => {
   //for all tests
   let NumberOfEventsWrapper;
   beforeAll(() => {
-    NumberOfEventsWrapper = shallow(<NumberOfEvents />);
+    NumberOfEventsWrapper = shallow(<NumberOfEvents updateEvents={() => { }} />);
   });
 
-  //tests that an input exists in the NumberOfEvents component
+  //tests that an input with class .number-of-events exists in the NumberOfEvents component
   test('render event number input', () => {
-    expect(NumberOfEventsWrapper.find('input')).toHaveLength(1);
+    expect(NumberOfEventsWrapper.find('.number-of-events')).toHaveLength(1);
   });
 
-  //test that when no number has been entered the default is 32
+  /*/test that when no number has been entered the default is 32
   test('default event number is 32', () => {
     expect(NumberOfEventsWrapper.state('eventNumber')).toBe(32);
+  });*/
+
+  //
+  test('render number input correctly', () => {
+    const number = NumberOfEventsWrapper.state('number');
+    expect(NumberOfEventsWrapper.find('.number-of-events').prop('value')).toBe(number);
   });
 
   //test that the state is changed when the user enters text in the input field 
   test('change state when number input changes', () => {
-    const eventObject = { target: { value: 25 } };
-    NumberOfEventsWrapper.find('input').simulate('change', eventObject);
-    expect(NumberOfEventsWrapper.state('eventNumber')).toBe(25);
+    NumberOfEventsWrapper.find('.number-of-events').simulate('change', { target: { value: 20 } });
+    expect(NumberOfEventsWrapper.state('number')).toBe(20);
   });
 });

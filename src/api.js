@@ -98,7 +98,7 @@ async function getSuggestions(query) {
 
 
 //check where the app is hosted to see what event data to return
-async function getEvents(lat, lon) {
+async function getEvents(lat, lon, page) {
   //IF app is on localhost return the mock data
   if (window.location.href.startsWith('http://localhost')) {
     return mockEvents.events;
@@ -113,6 +113,10 @@ async function getEvents(lat, lon) {
     // lat, lon is optional; if you have a lat and lon, you can add them
     if (lat && lon) {
       url += '&lat=' + lat + '&lon=' + lon;
+    }
+    //default number of events has benn changed
+    if (page) {
+      url += '&page=' + page;
     }
     const result = await axios.get(url);
     return result.data.events;

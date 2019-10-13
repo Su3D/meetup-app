@@ -97,8 +97,11 @@ input[type="text"], input[type="number"] {
   overflow-x: hidden;
 }
 
-.number-of-events {
-  width: 80px;
+.NumberOfEvents {
   margin: 20px 0 50px;
-  text-align: right;
+}
+
+input.number-of-events {
+  display: inline;
+  width: 60px;
 }
