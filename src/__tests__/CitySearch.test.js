@@ -46,8 +46,8 @@ describe('<CitySearch /> component', () => {
     }
   });
 
-  //test if value of query’s state changes when the user clicks on a suggested city
-  test('click on suggestion should change query state', () => {
+  //test if value of query’s state changes when the user clicks on a suggested city AND clear the list of suggestions
+  test('click on suggestion should change query state and empty the list of suggestions', () => {
     CitySearchWrapper.setState({
       suggestions: [
         {
@@ -72,19 +72,16 @@ describe('<CitySearch /> component', () => {
         }
       ]
     });
-
+    expect(CitySearchWrapper.find('.suggestions li')).toHaveLength(2);
     CitySearchWrapper.find('.suggestions li').at(0).simulate('click');
     expect(CitySearchWrapper.state('query')).toBe('Arvada, Colorado, USA');
+    expect(CitySearchWrapper.find('.suggestions li')).toHaveLength(0);
   });
 });
 
 
 //scope for integration testing
 describe('<CitySearch /> integration', () => {
-  //sets CitySearchWrapper to use the shallow rendering API from Enzyme
-  //for all tests
-
-
   //test whether the value of suggestions on the state of CitySearch is equal to given object(s)
   test('get a list of cities when user searches for Arvada', async () => {
     const CitySearchWrapper = shallow(<CitySearch />);
@@ -113,6 +110,5 @@ describe('<CitySearch /> integration', () => {
       }
     ]);
   });
-
 
 });

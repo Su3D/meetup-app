@@ -16,14 +16,14 @@ class CitySearch extends Component {
   }
 
   handleItemClicked = (value, lat, lon) => {
-    this.setState({ query: value });
+    this.setState({ query: value, suggestions: [] });
     this.props.updateEvents(lat, lon); //also call updateEvents() whenever handleItemClicked() is called and pass lat/lon
   }
 
   render() {
     return (
       <div className="CitySearch">
-        <input type="text" className="city" value={this.state.query} onChange={this.handleInputChanged} />
+        <input type="text" className="city" value={this.state.query} onChange={this.handleInputChanged} placeholder="City" />
 
         <ul className="suggestions">
           {this.state.suggestions.map(item =>
