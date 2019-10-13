@@ -30,7 +30,6 @@ describe('<App /> component', () => {
   test('render NumberOfEvents', () => {
     expect(AppWrapper.find(NumberOfEvents)).toHaveLength(1);
   });
-
 });
 
 
@@ -64,5 +63,4 @@ describe('<App /> integration', () => {
     expect(AppWrapper.find('.Event')).toHaveLength(4);
     AppWrapper.unmount();
   });
-
 });
