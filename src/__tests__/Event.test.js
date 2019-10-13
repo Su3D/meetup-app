@@ -32,7 +32,7 @@ describe('<Event /> component', () => {
     expect(EventWrapper.find('.yesRSVP')).toHaveLength(1);
   });
 
-  //test that details exists in the Event component
+  //test that details button exists in the Event component
   test('render button that displays event details', () => {
     expect(EventWrapper.find('.details')).toHaveLength(1);
   });
