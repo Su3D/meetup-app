@@ -3,12 +3,14 @@ import { shallow } from 'enzyme';
 
 import CitySearch from '../CitySearch';
 
+//scope for unit testing
 describe('<CitySearch /> component', () => {
   //sets CitySearchWrapper to use the shallow rendering API from Enzyme
   //for all tests
   let CitySearchWrapper;
   beforeAll(() => {
-    CitySearchWrapper = shallow(<CitySearch />);
+    //CitySearchWrapper = shallow(<CitySearch />);
+    CitySearchWrapper = shallow(<CitySearch updateEvents={() => { }} />);
   });
 
   //tests that an element with the class .city exists in the CitySearch component
@@ -49,24 +51,24 @@ describe('<CitySearch /> component', () => {
     CitySearchWrapper.setState({
       suggestions: [
         {
-          "city": "Arvada",
-          "country": "us",
-          "localized_country_name": "USA",
-          "state": "CO",
-          "name_string": "Arvada, Colorado, USA",
-          "zip": "80001",
-          "lat": 39.8,
-          "lon": -105.09
+          city: 'Arvada',
+          country: 'us',
+          localized_country_name: 'USA',
+          state: 'CO',
+          name_string: 'Arvada, Colorado, USA',
+          zip: '80001',
+          lat: 39.8,
+          lon: -105.09
         },
         {
-          "city": "Arvada",
-          "country": "us",
-          "localized_country_name": "USA",
-          "state": "WY",
-          "name_string": "Arvada, Wyoming, USA",
-          "zip": "82831",
-          "lat": 44.71,
-          "lon": -106.1
+          city: 'Arvada',
+          country: 'us',
+          localized_country_name: 'USA',
+          state: 'WY',
+          name_string: 'Arvada, Wyoming, USA',
+          zip: '82831',
+          lat: 44.71,
+          lon: -106.1
         }
       ]
     });
@@ -74,4 +76,43 @@ describe('<CitySearch /> component', () => {
     CitySearchWrapper.find('.suggestions li').at(0).simulate('click');
     expect(CitySearchWrapper.state('query')).toBe('Arvada, Colorado, USA');
   });
+});
+
+
+//scope for integration testing
+describe('<CitySearch /> integration', () => {
+  //sets CitySearchWrapper to use the shallow rendering API from Enzyme
+  //for all tests
+
+
+  //test whether the value of suggestions on the state of CitySearch is equal to given object(s)
+  test('get a list of cities when user searches for Arvada', async () => {
+    const CitySearchWrapper = shallow(<CitySearch />);
+    CitySearchWrapper.find('.city').simulate('change', { target: { value: 'Arvada' } });
+    await CitySearchWrapper.update();
+    expect(CitySearchWrapper.state('suggestions')).toEqual([
+      {
+        city: 'Arvada',
+        country: 'us',
+        localized_country_name: 'USA',
+        state: 'CO',
+        name_string: 'Arvada, Colorado, USA',
+        zip: '80001',
+        lat: 39.8,
+        lon: -105.09
+      },
+      {
+        city: 'Arvada',
+        country: 'us',
+        localized_country_name: 'USA',
+        state: 'WY',
+        name_string: 'Arvada, Wyoming, USA',
+        zip: '82831',
+        lat: 44.71,
+        lon: -106.1
+      }
+    ]);
+  });
+
+
 });
