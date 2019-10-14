@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "http://su3d.github.io/meetup-app",
   "dependencies": {
+    "atatus-spa": "^4.0.3",
     "axios": "^0.19.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
