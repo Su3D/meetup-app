@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { getSuggestions } from './api';
+import { InfoAlert } from './Alert';
 
 class CitySearch extends Component {
   state = {
@@ -12,7 +13,15 @@ class CitySearch extends Component {
   handleInputChanged = (event) => {
     const value = event.target.value;
     this.setState({ query: value });
-    getSuggestions(value).then(suggestions => this.setState({ suggestions }));
+    getSuggestions(value).then(suggestions => {
+      this.setState({ suggestions });
+      //check if the list of suggestions exists, if no suggestions show alert
+      if (value && suggestions.length === 0) {
+        this.setState({ infoText: 'We can not find a match for that city. Please try again.' });
+      } else { //if there are suggestions show/do nothing
+        this.setState({ infoText: '' });
+      }
+    });
   }
 
   handleItemClicked = (value, lat, lon) => {
@@ -23,6 +32,7 @@ class CitySearch extends Component {
   render() {
     return (
       <div className="CitySearch">
+        <InfoAlert text={this.state.infoText} />
         <input type="text" className="city" value={this.state.query} onChange={this.handleInputChanged} placeholder="City" />
 
         <ul className="suggestions">
