@@ -52,9 +52,6 @@ async function getAccessToken() {
   return getOrRenewAccessToken('renew', refreshToken);
 }
 
-
-
-
 //check where the app is hosted to see what location data to return
 async function getSuggestions(query) {
   //IF app is on localhost return the mock data
@@ -93,7 +90,7 @@ async function getSuggestions(query) {
     const result = await axios.get(url);
     return result.data;
   }
-  return []; //return empty array IF access_token  is found
+  return []; //return empty array IF access_token is found
 }
 
 
@@ -102,6 +99,12 @@ async function getEvents(lat, lon, page) {
   //IF app is on localhost return the mock data
   if (window.location.href.startsWith('http://localhost')) {
     return mockEvents.events;
+  }
+
+  //check if the iser is offline and if so return events from local storage
+  if (!navigator.onLine) {
+    const events = localStorage.getItem('lastEvents');
+    return JSON.parse(events);
   }
 
   //IF not on localhost ask for access_token and send GET request to real Meetup API
@@ -119,9 +122,14 @@ async function getEvents(lat, lon, page) {
       url += '&page=' + page;
     }
     const result = await axios.get(url);
-    return result.data.events;
+    //return result.data.events;
+    const events = result.data.events;
+    if (events.length) { // Check if the events exist and save them in local storage
+      localStorage.setItem('lastEvents', JSON.stringify(events));
+    }
+    return events;
   }
-  return []; //return empty array IF access_token  is found
+  return []; //return empty array IF access_token is found
 }
 
 export { getSuggestions, getEvents };
